@@ -9,7 +9,7 @@ const {mongoose} = require('./database')
 
 //#region MIDDLEWARE
 	app.use(morgan('dev'))
-	app.use(express.json())
+  app.use(express.json())
 //#endregion
 
 //#region ROUTES

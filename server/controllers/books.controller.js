@@ -3,43 +3,39 @@ const booksCtrl = {};
 
 booksCtrl.getBooks = async ( req, res) => {
     console.log('la peticion es :> ', req);
-    
-   const books = await bookModel.find();
+    const books = await bookModel.find();
     res.json(books);
 
 }
 
-booksCtrl.createBook = async ( req, res) => {
-    console.log(req.body);
-    const new_book = new bookModel(req.body);
-     const book_save = await new_book.save();
-    res.json(book_save);    
-}
-
-
-booksCtrl.getEmployee =  async ( req, res) => {
-    console.log(req.params);
-    const emp =   await Employee.findById(req.param.id, (err, res) =>{
-         err ? console.error('No se encontraron el documento') : console.error('Consulta realizada')
+booksCtrl.getBook =  async ( req, res) => {
+    const emp = await bookModel.findById(req.params.id, (err, book) =>{
+         err ? console.error('No se encontraron el documento') : console.error('Consulta realizada', book )
     })
+    
     res.json(emp)
 }
 
-booksCtrl.editEmployee = async ( req, res) => {
-    const {id} = req.params;
-    const emplo_edit = {
-        name: req.body.name,
-        position: req.body.position,
-        office: req.body.office,
-        salary: req.body.salary
-    } 
-
-    const emp_ed = await Employee.findByIdAndUpdate(id, {$set:emplo_edit}, {new: true});
-    res.json('actualizado');
+booksCtrl.createBook = async ( req, res) => {
+    const new_book = new bookModel(req.body);
+    const book_save = await new_book.save();
+    res.status(201).json(book_save);    
 }
 
-booksCtrl.deleteEmployee = async ( req, res) => {
-    await Employee.findByIdAndDelete(req.params.id);
+booksCtrl.editBookPut = async ( req, res) => {
+    const {id} = req.params;
+    const book_edit = {
+            read: req.body.read,
+            title: req.body.title,
+            genre: req.body.genre,
+            author: req.body.author
+        }
+    const book_edited = await bookModel.findByIdAndUpdate(id, {$set:book_edit}, {new: true});
+    res.json(book_edited);
+}
+
+booksCtrl.deleteBook = async ( req, res) => {
+    await bookModel.findByIdAndDelete(req.params.id);
     res.json('Eliminado')
 }
 
