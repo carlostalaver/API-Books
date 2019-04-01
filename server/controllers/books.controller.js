@@ -9,10 +9,10 @@ booksCtrl.getBooks = async ( req, res) => {
 }
 
 booksCtrl.getBook =  async ( req, res) => {
-    const emp = await bookModel.findById(req.params.id, (err, book) =>{
+    const {id} = req.params;
+    const emp = await bookModel.findById(id, (err, book) =>{
          err ? console.error('No se encontraron el documento') : console.error('Consulta realizada', book )
     })
-    
     res.json(emp)
 }
 
@@ -37,6 +37,27 @@ booksCtrl.editBookPut = async ( req, res) => {
 booksCtrl.deleteBook = async ( req, res) => {
     await bookModel.findByIdAndDelete(req.params.id);
     res.json('Eliminado')
+}
+booksCtrl.editBookPatch = async ( req, res) => {
+    const {id} = req.params;
+   // console.log('En el patch esta ', req.body);
+    
+    let book_edited = await bookModel.findById(id, (err, book) => {
+        if (err) console.error('No se encontraron el documento')
+       
+       if (book) {
+
+       }
+   });
+
+   Object.entries(req.body).forEach(item => {
+       const key = item[0];
+       const value = item[1];
+       book_edited[key] = value;
+    })
+
+     
+      res.json(book_edited.save());
 }
 
 module.exports = booksCtrl;
