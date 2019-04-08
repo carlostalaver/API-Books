@@ -1,8 +1,9 @@
 const express = require('express');
-const app =  express();
 const  morgan = require('morgan');
 const bookModel = require('./models/bookModels')
 const {mongoose} = require('./database')
+
+const app =  express();
 
 //#region CONFIGURACION
   app.set('port', process.env.PORT || 4000);

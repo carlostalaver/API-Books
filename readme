@@ -1,0 +1,7 @@
+
+para poblar una BBDD en el terminal copiar 
+
+ mongo bookAPI < booksJson.js   ( donde booksJson.js es el archivo que contiene los registros de la BBDD
+                                  y bookAPI sera en nombre de la BBDD)
+
+http://localhost:3000/api/book?genre=Fantasy    -> para realizar busquedas con filtros                                  
